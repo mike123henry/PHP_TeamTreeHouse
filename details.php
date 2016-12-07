@@ -4,7 +4,6 @@ include("inc/functions.php");
 if (isset($_GET["id"])) {
     $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_NUMBER_INT);
     $item = single_item_array($id);
-    var_dump($item);
 }
 
 if (empty($item)) {
@@ -60,7 +59,7 @@ include("inc/header.php"); ?>
                 <?php if (strtolower($item["category"]) == "books") { ?>
                 <tr>
                     <th>Author</th>
-                    <td><?php echo implode(", ",$item["authors"]); ?></td>
+                    <td><?php echo implode(", ",$item["author"]); ?></td>
                 </tr>
                 <tr>
                     <th>Publisher</th>
@@ -77,11 +76,11 @@ include("inc/header.php"); ?>
                 </tr>
                 <tr>
                     <th>Writer</th>
-                    <td><?php echo implode(", ",$item["writers"]); ?></td>
+                    <td><?php echo implode(", ",$item["writer"]); ?></td>
                 </tr>
                 <tr>
                     <th>Star</th>
-                    <td><?php echo implode(", ",$item["stars"]); ?></td>
+                    <td><?php echo implode(", ",$item["star"]); ?></td>
                 </tr>
                 <?php } else if (strtolower($item["category"]) == "music") { ?>
                 <tr>

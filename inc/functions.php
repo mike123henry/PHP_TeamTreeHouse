@@ -1,9 +1,48 @@
 <?php
-function full_catalog_array() {
+function full_catalog_array($category) {
+    include("connection.php");
+    $category = strtolower($category);
+    try {
+       $results = $db->prepare("
+        SELECT media_id, title, category,img
+        FROM Media
+        WHERE LOWER(category) = ?
+        ");
+       $results -> bindPram(1, $category, PDO::PARAM_STR);
+       $results-> execute();
+    } catch (Exception $e) {
+       echo "Unable to retrieved results";
+       exit;
+    }
+
+    $catalog = $results->fetchAll();
+    return $catalog;
+}
+
+function category_catalog_array() {
     include("connection.php");
 
     try {
        $results = $db->query("SELECT media_id, title, category,img FROM Media");
+    } catch (Exception $e) {
+       echo "Unable to retrieved results";
+       exit;
+    }
+
+    $catalog = $results->fetchAll();
+    return $catalog;
+}
+
+function random_catalog_array() {
+    include("connection.php");
+
+    try {
+       $results = $db->query(
+        "SELECT media_id, title, category,img
+        FROM Media
+        ORDER BY RANDOM()
+        LIMIT 4"
+        );
     } catch (Exception $e) {
        echo "Unable to retrieved results";
        exit;
@@ -54,7 +93,7 @@ function single_item_array($id) {
     return $item;
 }
 
-function get_item_html($id,$item) {
+function get_item_html($item) {
     $output = "<li><a href='details.php?id="
         . $item["media_id"] . "'><img src='"
         . $item["img"] . "' alt='"
