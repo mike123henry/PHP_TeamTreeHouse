@@ -53,7 +53,20 @@ if (empty($section)) {
 } else {
     $catalog = category_catalog_array($section, $items_per_page, $offset);
 }
-
+$pagination = "<div class=\"pagination\">";
+$pagination .= "Pages:";
+    for($i = 1 ; $i <= $total_pages ; $i++){
+        if($i == $current_page){
+            $pagination .= " <span>$i</span>";
+        } else {
+            $pagination .= " <a href='catalog.php?";
+            if(!empty($section)){
+                $pagination .= "cat=". $section . "&";
+            }
+        $pagination .= "pg=$i'>$i</a>";
+        }
+    }
+$pagination .= "</div>";
 
 include("inc/header.php"); ?>
 
@@ -66,22 +79,7 @@ include("inc/header.php"); ?>
             echo "<a href='catalog.php'>Full Catalog</a> &gt; ";
         }
         echo $pageTitle; ?></h1>
-        <div class="pagination">
-            Pages:
-            <?php
-            for($i = 1 ; $i <= $total_pages ; $i++){
-                if($i == $current_page){
-                    echo "<span>$i</span>";
-                } else {
-                    echo "<a href='catalog.php?";
-                    if(!empty($section)){
-                        echo "cat=". $section . "&";
-                    }
-                echo "pg=$i'>$i</a>";
-                }
-            }
-            ?>
-        </div>
+        <?php echo $pagination ?>
         <ul class="items">
             <?php
             foreach ($catalog as $item) {
@@ -89,7 +87,7 @@ include("inc/header.php"); ?>
             }
             ?>
         </ul>
-
+        <?php echo $pagination; ?>
     </div>
 </div>
 

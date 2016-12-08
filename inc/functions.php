@@ -125,7 +125,6 @@ function single_item_array($id) {
       echo $e;
       exit;
     }
-
     $item = $results->fetch(PDO::FETCH_ASSOC);
     if(empty($item)) return $item;
 
@@ -148,6 +147,35 @@ function single_item_array($id) {
         $item[$row["role"]][] = $row["fullname"];
     }
     return $item;
+}
+
+function genre_array($category = null){
+  $category = strtolower($category);
+  include("connection.php");
+
+  try{
+    $sql = "SELECT genre, category "
+    . " FROM Genres "
+    . " JOIN Genre_Categories "
+    . " ON Genres.genre_id = Genre_Categories.genre_id ";
+    if(!empty($category)){
+      $results = $db->prepare($sql
+        ." WHERE LOWER(category) = ?"
+        ." ORDER BY genre");
+      $results-> bindParam(1,$category, PDO::PARAM_STR);
+    } else {
+      $results = $db->prepare($sql . " ORDER BY genre");
+    }
+
+  $results->execute();
+  } catch(Exception $e){
+    echo "bad query";
+  }
+  $genres = array();
+  while ($row = $results->fetch(PDO::FETCH_ASSOC)){
+    $genres[$row["category"]][] =$row["genre"];
+  }
+  return $genres;
 }
 
 function get_item_html($item) {
