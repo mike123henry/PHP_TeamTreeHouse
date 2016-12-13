@@ -488,7 +488,20 @@ textarea {
     overflow: auto; /* 1 */
     vertical-align: top; /* 2 */
 }
-
+.searchxxx form
+{
+    margin: 10px 0 10px auto;
+    width: 300px;
+    background:green;
+    color:white;
+}
+.searchxxx form input[type="submit"]
+{
+    padding: 6px;
+    width: auto;
+    background:red;
+    color:black;
+}
 /* ==========================================================================
    Tables
    ========================================================================== */
@@ -697,3 +710,4 @@ form input[type="submit"] {
 .footer a {text-decoration: none; color: #539def; margin: 0 10px;}
 .footer li:first-child a {margin-left: 4px;}
 .footer a:hover, .footer a:active {text-decoration: underline;}
+

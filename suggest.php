@@ -174,8 +174,8 @@ include("inc/header.php");
                             echo "<optgroup label=\"$category\">";
                             foreach($options as $option){
                                 echo "<option value=\"$option\"";
-                                 if (isset($genre) && $genre==$option) {
-                                echo " selected";
+                                if (isset($genre) && $genre==$option) {
+                                    echo " selected";
                                 }
                                 echo ">$option</option>";
                             }
