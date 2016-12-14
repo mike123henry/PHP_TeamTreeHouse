@@ -15,9 +15,14 @@ function get_catalog_count($category = null, $search = null){
         . " WHERE LOWER(category) = ?"
         );
       $result->bindParam(1,$category,PDO::PARAM_STR);
+      //$result->bind_param(1,$category,PDO::PARAM_STR);
     } else {
       $result = $db->prepare($sql);
     }
+    // //*********************
+    // $sql = "SELECT COUNT(media_id) FROM Media WHERE title LIKE 'code'";
+    // $result = $db->prepare($sql);
+    // //*********************
     $result->execute();
 
   } catch (Exception $e) {
@@ -112,6 +117,14 @@ function search_catalog_array($search, $limit = null, $offset = 0) {
         $results = $db->prepare($sql);
         $results -> bindValue(1, "%".$search."%", PDO::PARAM_STR);
       }
+// //*******************
+//       $sql = "
+//         SELECT media_id, title, category,img
+//         FROM Media
+//         WHERE title LIKE '%code%' ";
+
+//         $results = $db->prepare($sql);
+// //*******************
       $results-> execute();
     } catch (Exception $e) {
        echo "Unable to retrieved results";
@@ -123,21 +136,23 @@ function search_catalog_array($search, $limit = null, $offset = 0) {
 }
 
 function random_catalog_array() {
+
     include("connection.php");
 
+ //       ORDER BY RANDOM()
     try {
        $results = $db->query("
         SELECT media_id, title, category,img
         FROM Media
-        ORDER BY RANDOM()
+        ORDER BY RAND()
         LIMIT 4
       ");
     } catch (Exception $e) {
        echo "Unable to retrieved results";
        exit;
     }
-
     $catalog = $results->fetchAll();
+    //$catalog = mysqli_fetch_all($results,MYSQLI_ASSOC);
     return $catalog;
 }
 
